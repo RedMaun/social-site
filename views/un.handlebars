@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Посты</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+        body
+        {
+            margin: 0px;
+            padding: 0px;
+            background-color: rgb(214, 214, 214);
+            font-family: 'Roboto', sans-serif;
+            overflow-y: scroll;
+        }
+
+        #feed
+        {
+            width: 600px;
+            height: auto;
+            margin: auto;
+        }
+
+        #spacce
+        {
+            height: 10px;
+            display: block;
+        }
+        #space
+        {
+            height: 120px;
+            display: block;
+        }
+        .cont
+        {
+            position:relative;
+            padding: 20px;
+            width: 90%;
+            height: auto;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 20px;
+            background-color: white;
+            z-index: 2;
+        }
+
+        .title-row
+        {
+            position: relative;
+            height: 50px;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .avatar-cont
+        {
+            width: 10%;
+            padding-bottom: 10%;
+            background-color: red;
+        }
+        .content
+        {
+            display: block;  
+            margin-top: 15px;
+            word-wrap: break-word;
+            color: #1a1a1a;
+        }
+        .avatar-cont
+        {
+            display: inline-block;
+            color: #1a1a1a;
+            border-radius: 40px;
+        }
+
+        .nick, .date
+        {
+            margin-left: 7px;
+            display: block;
+            font-size: 16px;
+        }
+        .attach
+        {
+            width: 100%;
+        }
+
+        .desc
+        {
+            margin-top: -10px;
+            margin-bottom: 15px;
+            font-size: 15px;
+            word-break: break-all;
+        }
+
+        .attach img
+        {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+        }
+        .likes, .comments
+        {
+            display: flex;
+            width: auto;
+            height: auto;
+            align-items: center;
+            justify-content: center;
+            background-color: #eeeeee;
+            border-radius: 20px;
+            padding: 1.6%;
+            font-size: 14px;
+            outline: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .likes:hover, .comments:hover
+        {
+            background-color: #e4e4e4;
+        }
+
+        .likes:active, .comments:active
+        {
+            background-color: #dddddd;
+        }
+
+        .likes svg, .comments svg
+        {
+            margin-right: 3px;
+            color: #1a1a1a;
+        }
+        .comments
+        {
+            margin-left: 15px;
+        }
+        .bottom-row
+        {
+            margin-top: 10px;
+            display: flex;
+        }
+        .comment-section
+        {
+            background-color: rgb(241, 241, 241);
+            width: 90%;
+            padding: 20px;
+            display: block;
+            height: auto;
+            margin: auto;
+            margin-bottom: 2vh;
+            margin-top: -20px;
+            z-index: 1;
+            position:relative;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+        .comment .avatar-cont
+        {
+            width: 8%;
+            padding-bottom: 8%;
+        }
+        .comment
+        {
+            position: relative;
+        }
+        .comment .data-cont .nick, .comment .data-cont .date
+        {
+            font-size: 14px;
+        }
+        .comment-title
+        {
+            display: block;
+            height: 70px;
+            display: flex;
+            align-items: center;
+        }
+        .content-comment
+        {
+            display: block;
+            height: auto;
+        }
+        .desc-comment
+        {
+            word-break: break-all;
+            font-size: 14px;
+        }
+        .attach-comment
+        {
+            width: 30%;
+        }
+
+        .attach-comment img
+        {
+            margin-top: 10px;
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .comment .likes
+        {
+            background: rgb(212, 212, 212);
+            color: #1a1a1a;
+            margin-top: 10px; 
+            font-size: 13px;
+            padding: 1.4%;
+        }
+        .comment .likes svg
+        {
+            width: 25px;
+            color: #1a1a1a;
+        }
+        
+        .comment .likes:hover
+        {
+            background: rgb(200, 200, 200);
+        }
+        .comment .likes:active
+        {
+            background: rgb(190, 190, 190);
+        }
+        .add
+        {
+            border: none;
+            border-radius: 10px;
+            display: block;
+            overflow: none;
+            outline: none;
+            padding: 5px;
+            width: 90%;
+            height: 20px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        .add-button, .sent-button
+        {
+            width: 48px;
+            background-color: #ffffff;
+            border: none;
+            height: 30px;
+            margin-left: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .add-cont
+        {
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+        .sent-button
+        {
+            background: url('send.png');
+            background-repeat: no-repeat;
+            background-size: auto 80%;
+            background-position: center;
+        }
+        .add-button
+        {
+            background: url('attach.svg');
+            background-repeat: no-repeat;
+            background-size: auto 80%;
+            background-position: center;
+        }
+        .add:focus::placeholder 
+        {
+            color: transparent;
+        }
+        #header
+        {
+            width: 100%;
+            height: 40px;
+            display: inline-block;
+            background-color: white;
+            /* border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px; */
+            position: fixed;
+            z-index: 3;
+            top: 0px;
+        }
+
+        .posts-feed, .login, .register, .logo, .profile
+        {
+            float: right;
+            width: auto;
+            height: 100%;
+            margin-left: 10px;
+            outline: none;
+            border: none;
+            color: #1a1a1a;
+            background: white;
+            cursor: pointer;
+        }
+        .logo
+        {
+            background: rgb(241, 241, 241);
+            float: left;
+            width: 120px;
+            margin-left: 0px;
+        }
+        .posts-feed:hover, .login:hover, .register:hover, .profile:hover
+        {
+            background: rgb(241, 241, 241);
+        }
+        .posts-feed:active, .login:active, .register:active, .profile:active
+        {
+            background: rgb(226, 226, 226);
+        }
+        .error
+        {
+            display: block;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <a href="https://github.com/RedMaun">
+            <button class="logo">@RedMaun</button>
+        </a>    
+        <a href="/api/reg">
+            <button class="register">Зарегестрироваться</button>
+        </a>
+        <a href="/api/login">
+            <button class="login">Войти</button>
+        </a>
+        <a href="/api/posts">
+            <button class="posts-feed">Посты</button>
+        </a>
+    </div>
+    <div id="feed">
+        <div id="space"></div>
+        <div class="error">{{ err }}</div>
+    </div>
+    </div>
+</body>
+</html>

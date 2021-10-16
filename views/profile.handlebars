@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ nick }}</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+        body
+        {
+            margin: 0px;
+            padding: 0px;
+            background-color: white;
+            font-family: 'Roboto', sans-serif;
+            color: #1a1a1a;
+            overflow-y: scroll; 
+        }
+        #back
+        {
+            width: 100%;
+            height: 250px;
+            display: block;
+        }
+        #ava-cont
+        {
+            width: 250px;
+            height: 250px;
+            background-color: rgb(255, 255, 255);
+            margin-top: -125px;
+            margin-left: 100px;
+            border-radius: 150px;
+            position: relative;
+            z-index: 3;
+        }
+        #ava-cont img
+        {
+            -webkit-filter: brightness(100%);
+            width: 220px;
+            height: 220px;
+            border-radius: 150px;
+            margin-left: 15px;
+            margin-top: 15px;
+        }
+        #ava-cont img:hover + #text
+        {
+            display: block;
+        }
+        #text:hover
+        {
+            display: block;
+            background-color: #00000052;
+        }
+        #text
+        {
+            transition: all 0.2s ease;
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 150px;
+            top: 15px;
+            left: 15px;
+            color: white;
+            background-color: transparent;
+            outline: none;
+            border: none;
+            font-size: 80px;
+            display: none;
+            z-index: 4;
+            cursor: pointer;
+            
+        }
+        #name
+        {
+            width: 500px;
+            height: auto;
+            margin-left: 100px;
+            font-size: 35px;
+        }
+        #des
+        {
+            width: 250px;
+            padding: 15px;
+            padding-bottom: 40px;
+            height: auto;
+            margin-left: 85px;
+            color: rgb(161, 161, 161);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            outline: none;
+            border: none;
+            resize: none;
+            font-family: 'Roboto', sans-serif;
+            font-size: 15px;
+        }
+        #des-cont
+        {
+            width: 300px;
+            height: 170px;
+            position: relative;
+        }
+        #des:hover
+        {
+            background-color: #1a1a1a0c;
+        }
+        #back-add
+        {
+            transition: all 0.2s ease;
+            width: 100%;
+            height: 250px;
+            z-index: 2;
+            background-color: transparent;
+            border: none;
+            font-size: 90px;
+            color: white;
+            display: none;
+            cursor: pointer;
+            
+        }
+        #back-add:hover
+        {
+            display: block;
+            background-color: #00000052;
+        }
+        #save
+        {
+            position: absolute;
+            bottom: -50px;
+            right: -65px;
+            height: 30px;
+            width: 100px;
+            border: none;
+            border-radius: 10px;
+            background-color: #d3d3d3;
+            outline: none;
+            display: none;
+        }
+        #save:hover
+        {
+            background-color: #a7a7a7;
+        }
+        #save:active
+        {
+            background-color: #919191;
+        }
+        #text::before
+        {
+            content: 'dsadssdads';
+            color: transparent;
+        }
+        input:focus::placeholder
+        {
+            color: transparent;
+        }
+        #change-back
+        {
+            width: 400px;
+            height: 100px;
+            background-color: #1a1a1a;
+            border-radius: 20px;
+            padding: 20px;
+            z-index: 5;
+            display: none;
+            left: 0px;
+            right: 0px;
+            top: 150px;
+            margin: auto;
+            position: absolute;
+        }
+        label
+        {
+            color: white;
+            display: block;
+            text-align: center;
+        }
+        #color-block
+        {
+            margin-top: 30px;
+            display: inline-block;
+            width: 400px;
+        }
+        #color
+        {
+            width: 250px;
+            padding-left: 15px;
+            padding-right: 15px;
+            height: 30px;
+            border-radius: 6px;
+            border: none;
+            outline: none;
+        }
+        #butt
+        {
+            width: 100px;
+            height: 32px;
+            border-radius: 6px;
+            border: none;
+            outline: none;
+            background-color: white;
+        }
+        #butt:hover
+        {
+            background-color: #ececec;
+        }
+        #butt:active
+        {
+            background-color: #dddddd;
+        }
+        #cancel
+        {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            top: 10px;
+            border-radius: 30px;
+            right: 10px;
+            border: none;
+            outline: none;
+            background-color: white;
+        }
+        #cancel:hover
+        {
+            background-color: #ececec;
+        }
+        #cancel:active
+        {
+            background-color: #dddddd;
+        }
+        #error
+        {
+            color: red;
+        }
+        #header
+        {
+            width: 100%;
+            height: 40px;
+            display: inline-block;
+            background-color: white;
+            border-bottom: 2px solid #ebebeb;
+            /* border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px; */
+            position: fixed;
+            z-index: 7;
+            top: 0px;
+        }
+        .posts-feed, .login, .register, .logo, .profile
+        {
+            float: right;
+            width: auto;
+            height: 100%;
+            margin-left: 10px;
+            outline: none;
+            border: none;
+            color: #1a1a1a;
+            background: white;
+            cursor: pointer;
+        }
+        .logo
+        {
+            background: rgb(241, 241, 241);
+            float: left;
+            width: 120px;
+            margin-left: 0px;
+        }
+        .posts-feed:hover, .login:hover, .register:hover, .profile:hover
+        {
+            background: rgb(241, 241, 241);
+        }
+        .posts-feed:active, .login:active, .register:active, .profile:active
+        {
+            background: rgb(226, 226, 226);
+        }
+        #feed
+        {
+            width: 600px;
+            height: auto;
+            margin: auto;
+            position: absolute;
+            left: 0px;
+            right: 0px;
+            margin: auto;
+        }
+        #space
+        {
+            height: 50px;
+            display: block;
+        }
+        .cont
+        {
+            position:relative;
+            padding: 20px;
+            width: 90%;
+            height: auto;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 20px;
+            background-color: rgb(255, 255, 255);
+            border: 1px solid #d4d4d4;
+            z-index: 2;
+            margin-bottom: 20px;
+        }
+        .title-row
+        {
+            position: relative;
+            height: 50px;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid#ebebeb;
+        }
+        .avatar-cont
+        {
+            width: 10%;
+        }
+        .content
+        {
+            display: block;  
+            margin-top: 25px;
+            word-wrap: break-word;
+            color: #1a1a1a;
+            
+        }
+        .avatar-cont
+        {
+            display: inline-block;
+            color: #1a1a1a;
+        }
+        .avatar-cont img
+        {
+            width: 100%;
+            height: auto;
+            border-radius: 40px;
+        }
+
+
+        .nick, .date
+        {
+            margin-left: 7px;
+            display: block;
+            font-size: 16px;
+        }
+        .attach
+        {
+            width: 100%;
+        }
+
+        .desc
+        {
+            margin-top: -10px;
+            margin-bottom: 15px;
+            font-size: 15px;
+            word-break: break-all;
+        }
+
+        .attach img
+        {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+        }
+        .likes, .comments
+        {
+            display: flex;
+            width: auto;
+            height: auto;
+            align-items: center;
+            justify-content: center;
+            background-color: #eeeeee;
+            border-radius: 20px;
+            padding: 10px;
+            font-size: 14px;
+            outline: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        
+
+        .likes:hover, .comments:hover
+        {
+            background-color: #e4e4e4;
+        }
+
+        .likes:active, .comments:active
+        {
+            background-color: #dddddd;
+        }
+
+        .likes svg, .comments svg
+        {
+            margin-right: 3px;
+            color: #1a1a1a;
+        }
+        .comments
+        {
+            margin-left: 15px;
+        }
+        .bottom-row
+        {
+            margin-top: 10px;
+            display: flex;
+        }
+        .comment .likes
+        {
+            background: rgb(212, 212, 212);
+            color: #1a1a1a;
+            margin-top: 10px; 
+            font-size: 13px;
+            padding: 1.4%;
+        }
+        .comment .likes svg
+        {
+            width: 25px;
+            color: #1a1a1a;
+        }
+        
+        .comment .likes:hover
+        {
+            background: rgb(200, 200, 200);
+        }
+        .comment .likes:active
+        {
+            background: rgb(190, 190, 190);
+        }
+        a
+        {
+            text-decoration: none;
+            color: #1a1a1a;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <a href="https://github.com/RedMaun">
+            <button class="logo">@RedMaun</button>
+        </a>
+
+        <a href="/api/user/exit">
+            <button class="profile">Выход</button>
+        </a>
+
+        <a href="/api/profile/{{ nick }}">
+            <button class="profile">{{ nick }}</button>
+        </a>
+
+        <a href="/api/posts">
+            <button class="posts-feed">Посты</button>
+        </a>
+    </div>
+    
+    <div id="change-back">
+        <label>Выберите новый цвет для банера</label>
+        <div id="color-block">
+            <input placeholder="#ffffff" id="color">
+            <button id="butt" onclick="col()">Подтвердить</button>
+            <button id="cancel" onclick="clos()">x</button>
+            <div id="error"></div>
+        </div>
+    </div>
+    <div id="back" style="background: {{ color }}">
+        <button id="back-add" onclick="change()"></button>
+    </div>
+    <div id="feed">
+        <div id="space"></div>
+        {{#each posts}}
+        <div class="comment-cont">
+            <div class="cont">
+                <div class="title-row">
+                    <div class="avatar-cont">
+                        <img src="{{ avatar }}">
+                    </div>
+                    <div class="data-cont">
+                         <a href="/api/profile/{{ name }}"class="nick">{{ name }}</a>
+                        <div class="date">{{ date }}</div>
+                    </div>
+                </div>
+                <div class="content">
+                    {{#if description}}
+                    <div class="desc">{{ description }}</div>
+                    {{/if}}
+                    {{#if attach}}
+                    <div class="attach">
+                        <img src={{ attach }}>
+                    </div>
+                    {{/if}}
+                </div>
+                <div class="bottom-row">
+                    {{#contains likesAmount @root.dd}}
+                        <button class="likes"name="like" onclick="like(this)" style="background: #ff5555" value={{_id}}{{@root.dd }}>
+                            <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path d="M16 4a5.95 5.95 0 00-3.89 1.7l-.12.11-.12-.11A5.96 5.96 0 007.73 4 5.73 5.73 0 002 9.72c0 3.08 1.13 4.55 6.18 8.54l2.69 2.1c.66.52 1.6.52 2.26 0l2.36-1.84.94-.74c4.53-3.64 5.57-5.1 5.57-8.06A5.73 5.73 0 0016.27 4zm.27 1.8a3.93 3.93 0 013.93 3.92v.3c-.08 2.15-1.07 3.33-5.51 6.84l-2.67 2.08a.04.04 0 01-.04 0L9.6 17.1l-.87-.7C4.6 13.1 3.8 11.98 3.8 9.73A3.93 3.93 0 017.73 5.8c1.34 0 2.51.62 3.57 1.92a.9.9 0 001.4-.01c1.04-1.3 2.2-1.91 3.57-1.91z" fill="currentColor" fill-rule="nonzero"></path></g></svg>
+                            <div>{{ length likesAmount }}</div>
+                        </button>
+                    {{else}}
+                        <button class="likes"  id={{_id}} name="like" onclick="like(this)"value={{_id}}{{@root.dd }}>
+                                <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path d="M16 4a5.95 5.95 0 00-3.89 1.7l-.12.11-.12-.11A5.96 5.96 0 007.73 4 5.73 5.73 0 002 9.72c0 3.08 1.13 4.55 6.18 8.54l2.69 2.1c.66.52 1.6.52 2.26 0l2.36-1.84.94-.74c4.53-3.64 5.57-5.1 5.57-8.06A5.73 5.73 0 0016.27 4zm.27 1.8a3.93 3.93 0 013.93 3.92v.3c-.08 2.15-1.07 3.33-5.51 6.84l-2.67 2.08a.04.04 0 01-.04 0L9.6 17.1l-.87-.7C4.6 13.1 3.8 11.98 3.8 9.73A3.93 3.93 0 017.73 5.8c1.34 0 2.51.62 3.57 1.92a.9.9 0 001.4-.01c1.04-1.3 2.2-1.91 3.57-1.91z" fill="currentColor" fill-rule="nonzero"></path></g></svg>
+                                <div>{{ length likesAmount }}</div>
+                        </button>
+                    {{/contains}}
+                    <a class="comments" href='/api/comment/{{_id}}'>
+                        <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path d="M16.9 4H7.1c-1.15 0-1.73.11-2.35.44-.56.3-1 .75-1.31 1.31C3.11 6.37 3 6.95 3 8.1v5.8c0 1.15.11 1.73.44 2.35.3.56.75 1 1.31 1.31l.15.07c.51.25 1.04.35 1.95.37h.25v2.21c0 .44.17.85.47 1.16l.12.1c.64.55 1.6.52 2.21-.08L13.37 18h3.53c1.15 0 1.73-.11 2.35-.44.56-.3 1-.75 1.31-1.31.33-.62.44-1.2.44-2.35V8.1c0-1.15-.11-1.73-.44-2.35a3.17 3.17 0 00-1.31-1.31A4.51 4.51 0 0016.9 4zM6.9 5.8h9.99c.88 0 1.18.06 1.5.23.25.13.44.32.57.57.17.32.23.62.23 1.5v6.16c-.02.61-.09.87-.23 1.14-.13.25-.32.44-.57.57-.32.17-.62.23-1.5.23h-4.02a.9.9 0 00-.51.26l-3.47 3.4V17.1c0-.5-.4-.9-.9-.9H6.74a2.3 2.3 0 01-1.14-.23 1.37 1.37 0 01-.57-.57c-.17-.32-.23-.62-.23-1.5V7.74c.02-.61.09-.87.23-1.14.13-.25.32-.44.57-.57.3-.16.58-.22 1.31-.23z" fill="currentColor" fill-rule="nonzero"></path></g></svg>
+                        {{ length comments }}
+                    </a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    <form id="ava-cont"  method="post" action="/api/ava" enctype="multipart/form-data">
+        <img id="ava-img" src={{ ava }}>
+        <input name="dd" type="file" id="text"></input>
+    </form>
+    <div id="name">{{ nick }}</div>
+    <div id="des-cont">
+        {{#if desc}}
+            <div id="des" onclick="des()">{{ desc }}</div>
+        {{else}}
+            <div id="des" onclick="des()">Описание</div>
+        {{/if}}
+        <button id="save" onclick="ssave()">сохранить</button>
+    </form>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script>
+        $('#text').change(function() {
+            $('#ava-cont').submit();
+        });
+        function ssave()
+        {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", '/api/desc', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({
+                name: document.getElementById('name').innerHTML,
+                desc: document.getElementById('des').innerHTML
+            }));
+        }
+        function col()
+        {
+            var a = document.getElementById('color');
+            var val = a.value;
+            if (val.includes('#') && val.length == 7)
+            {
+                var back = document.getElementById('back');
+                back.style.background = val;
+                var a = document.getElementById('change-back')
+                a.style.display = 'none';
+                var b = document.getElementById('color')
+                color.value = ''
+                var error = document.getElementById('error')
+                error.innerHTML = ''
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", '/api/color', true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify({
+                    name: document.getElementById('name').innerHTML,
+                    color: val
+                }));
+            }
+            else
+            {
+                var error = document.getElementById('error')
+                error.innerHTML = 'Неправильный цвет'
+            }
+        }
+        function change()
+        {
+            var a = document.getElementById('change-back')
+            a.style.display = 'block';
+        }
+        function clos()
+        {
+            var a = document.getElementById('change-back')
+            a.style.display = 'none';
+            var b = document.getElementById('color')
+            color.value = ''
+        }
+        $("#back").hover(function(){
+            $('#back-add').show();
+        },function(){
+            $('#back-add').hide();
+        });
+        (function($){
+            $.fn.setCursorToTextEnd = function() {
+                var $initialVal = this.val();
+                this.val($initialVal);
+            };
+        })(jQuery);
+        function des()
+        {
+            var e = document.getElementById('des');
+            var d = document.createElement('textarea');
+            d.id = 'des';
+            d.style.height = '130px';
+            d.style.background = '#1a1a1a0c'
+            d.innerHTML = e.innerHTML;
+            e.parentNode.replaceChild(d, e);
+            var butt = document.getElementById('save')
+            butt.style.display = "block"
+
+            var searchInput = $("#des");
+            searchInput
+            .putCursorAtEnd()
+            .on("blur", function() {
+                var e = document.getElementById('des');
+                var d = document.createElement('div');
+                var b = document.getElementById('save');
+                d.id = 'des';
+                d.setAttribute("onclick", "des()");
+                d.innerHTML = e.value;
+                e.parentNode.replaceChild(d, e);
+                b.style.display = 'none';
+                b.click();
+            })
+            .on("focus", function() { 
+                searchInput.putCursorAtEnd()
+            });
+        }
+        jQuery.fn.putCursorAtEnd = function() {
+            return this.each(function() {
+            var $el = $(this),
+                el = this;
+            if (!$el.is(":focus")) {
+            $el.focus();
+            }
+            if (el.setSelectionRange) {
+                var len = $el.val().length * 2;
+                setTimeout(function() {
+                el.setSelectionRange(len, len);
+                }, 1);
+            } else {
+                $el.val($el.val());
+            }
+            this.scrollTop = 999999;
+            });
+        };
+        function like(event)
+        {
+            var color = event.style.background;
+            if (color == "rgb(255, 85, 85)")
+            {
+                event.style.background = 'rgb(212, 212, 212)'
+                event.childNodes[3].innerHTML = Number(event.childNodes[3].innerHTML) - 1
+            }
+            else
+            {
+                event.style.background = 'rgb(255, 85, 85)'
+                event.childNodes[3].innerHTML = Number(event.childNodes[3].innerHTML) + 1
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", '/api/like', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({
+                like: event.value
+            }));
+        }
+    </script>
+</body>
+</html>

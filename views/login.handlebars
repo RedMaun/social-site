@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+        body
+        {
+            margin: 0px;
+            padding: 0px;
+            background-color: rgb(214, 214, 214);
+            font-family: 'Roboto', sans-serif;
+            color: #1a1a1a;
+            overflow-y: scroll; 
+        }
+        #header
+        {
+            width: 100%;
+            height: 40px;
+            display: inline-block;
+            background-color: white;
+            /* border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px; */
+            position: fixed;
+            z-index: 3;
+            top: 0px;
+        }
+
+        .posts-feed, .login, .register, .logo
+        {
+            float: right;
+            width: auto;
+            height: 100%;
+            margin-left: 10px;
+            outline: none;
+            border: none;
+            color: #1a1a1a;
+            background: white;
+            cursor: pointer;
+        }
+        .logo
+        {
+            background: rgb(241, 241, 241);
+            float: left;
+            width: 120px;
+            margin-left: 0px;
+        }
+        .posts-feed:hover, .login:hover, .register:hover
+        {
+            background: rgb(241, 241, 241);
+        }
+        .posts-feed:active, .login:active, .register:active
+        {
+            background: rgb(226, 226, 226);
+        }
+        .reg-cont
+        {
+            position: relative;
+            width: 400px;
+            height: 270px;
+            background: white;
+            margin: auto;
+            margin-top: 20vh;
+            border-radius: 20px;
+        }
+        .reg-title
+        {
+            display: block;
+            text-align: center;
+            position: relative;
+            padding-top: 20px;
+            margin-bottom: 20px;
+            font-size: 17px;
+        }
+        .name, .password
+        {
+            padding: 2%;
+            display: block;
+            width: 70%;
+            height: 30px;
+            font-size: 15px;
+            margin: auto;
+            margin-bottom: 20px;
+            border: none;
+            outline: none;
+            border-radius: 10px;
+            background: rgb(233, 233, 233);
+        }
+
+        input:focus::placeholder
+        {
+            color: transparent;
+        }
+        .confirm
+        {
+            display: block;
+            width: 74%;
+            height: 40px;
+            margin: auto;
+            background: #bcecff;
+            border: none;
+            outline: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .confirm:hover
+        {
+            background: #b2e9ff;
+        }
+        .confirm:active
+        {
+            background: #abe7ff;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <a href="https://github.com/RedMaun">
+            <button class="logo">@RedMaun</button>
+        </a>    
+        <a href="/api/reg">
+            <button class="register">Зарегейстрироваться</button>
+        </a>
+        <a href="/api/login">
+            <button class="login">Войти</button>
+        </a>
+        <a href="/api/posts">
+            <button class="posts-feed">Посты</button>
+        </a>
+    </div>
+    <div class="reg-cont">
+        <div class="reg-title">Login</div>
+        <form method="post" action="/api/user/login">
+            <input type="text" placeholder="Ваше имя" name="name" class="name">
+            <input type="password" placeholder="Ваш пароль" name="password" class="password">
+            <button class="confirm" type="submit">Портвербдить</button>
+        </form>
+    </div>
+</body>
+</html>

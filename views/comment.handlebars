@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Посты</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+        body
+        {
+            margin: 0px;
+            padding: 0px;
+            background-color: rgb(214, 214, 214);
+            font-family: 'Roboto', sans-serif;
+            overflow-y: scroll;
+        }
+
+        #feed
+        {
+            width: 600px;
+            height: auto;
+            margin: auto;
+        }
+
+        #spacce
+        {
+            height: 10px;
+            display: block;
+        }
+        #space
+        {
+            height: 100px;
+            display: block;
+        }
+        .cont
+        {
+            position:relative;
+            padding: 20px;
+            width: 90%;
+            height: auto;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 20px;
+            background-color: white;
+            z-index: 2;
+        }
+
+        .title-row
+        {
+            position: relative;
+            height: 50px;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid#ebebeb;
+        }
+        .avatar-cont
+        {
+            width: 10%;
+        }
+        .content
+        {
+            display: block;  
+            margin-top: 25px;
+            word-wrap: break-word;
+            color: #1a1a1a;
+            
+        }
+        .avatar-cont
+        {
+            display: inline-block;
+            color: #1a1a1a;
+        }
+        .avatar-cont img
+        {
+            width: 100%;
+            height: auto;
+            border-radius: 40px;
+        }
+
+
+        .nick, .date
+        {
+            margin-left: 7px;
+            display: block;
+            font-size: 16px;
+        }
+        .attach
+        {
+            width: 100%;
+        }
+
+        .desc
+        {
+            margin-top: -10px;
+            margin-bottom: 15px;
+            font-size: 15px;
+            word-break: break-all;
+        }
+
+        .attach img
+        {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+        }
+        .likes, .comments
+        {
+            display: flex;
+            width: auto;
+            height: auto;
+            align-items: center;
+            justify-content: center;
+            background-color: #eeeeee;
+            border-radius: 20px;
+            padding: 10px;
+            font-size: 14px;
+            outline: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        
+
+        .likes:hover, .comments:hover
+        {
+            background-color: #e4e4e4;
+        }
+
+        .likes:active, .comments:active
+        {
+            background-color: #dddddd;
+        }
+
+        .likes svg, .comments svg
+        {
+            margin-right: 3px;
+            color: #1a1a1a;
+        }
+        .comments
+        {
+            margin-left: 15px;
+        }
+        .bottom-row
+        {
+            margin-top: 10px;
+            display: flex;
+        }
+        .comment-section
+        {
+            background-color: rgb(241, 241, 241);
+            width: 90%;
+            padding: 20px;
+            display: block;
+            height: auto;
+            margin: auto;
+            margin-bottom: 2vh;
+            margin-top: -20px;
+            z-index: 1;
+            position:relative;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+        .comment .avatar-cont
+        {
+            width: 8%;
+            padding-bottom: 8%;
+        }
+        .comment
+        {
+            position: relative;
+            margin-bottom: 10px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 15px;
+        }
+        .comment .data-cont .nick, .comment .data-cont .date
+        {
+            font-size: 14px;
+        }
+        .comment-title
+        {
+            display: inline-block;
+            height: 50px;
+            display: flex;
+            align-items: center;
+        }
+        .content-comment
+        {
+            display: block;
+            height: auto;
+        }
+        .desc-comment
+        {
+            word-break: break-all;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .attach-comment
+        {
+            width: 30%;
+        }
+
+        .attach-comment img
+        {
+            margin-top: 10px;
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .comment .likes
+        {
+            background: rgb(212, 212, 212);
+            color: #1a1a1a;
+            margin-top: 10px; 
+            font-size: 13px;
+            padding: 1.4%;
+        }
+        .comment .likes svg
+        {
+            width: 25px;
+            color: #1a1a1a;
+        }
+        
+        .comment .likes:hover
+        {
+            background: rgb(200, 200, 200);
+        }
+        .comment .likes:active
+        {
+            background: rgb(190, 190, 190);
+        }
+        .add
+        {
+            border: none;
+            border-radius: 10px;
+            display: block;
+            overflow: none;
+            outline: none;
+            padding: 5px;
+            width: 90%;
+            height: 20px;
+            padding-left: 10px;
+            padding-right: 10px;
+            z-index: 2;
+        }
+        .add-button, .sent-button
+        {
+            width: 48px;
+            background-color: #ffffff;
+            border: none;
+            height: 30px;
+            margin-left: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .add-cont
+        {
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+        .sent-button
+        {
+            background: url('https://visualpharm.com/assets/57/Sent-595b40b85ba036ed117dba5b.svg');
+            background-repeat: no-repeat;
+            background-size: auto 85%;
+            background-position: center;
+        }
+        .add-button
+        {
+            background: url('https://visualpharm.com/assets/489/Attach-595b40b75ba036ed117d7942.svg');
+            background-repeat: no-repeat;
+            background-size: auto 85%;
+            background-position: center;
+        }
+        .add-button::before
+        {
+            content: 'dsafsfasfsfs';
+            color: transparent;
+        }
+        input:focus::placeholder 
+        {
+            color: transparent;
+        }
+        #header
+        {
+            width: 100%;
+            height: 40px;
+            display: inline-block;
+            background-color: white;
+            border-bottom: 2px solid #ebebeb;
+            /* border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px; */
+            position: fixed;
+            z-index: 3;
+            top: 0px;
+        }
+
+        .posts-feed, .login, .register, .logo, .profile
+        {
+            float: right;
+            width: auto;
+            height: 100%;
+            margin-left: 10px;
+            outline: none;
+            border: none;
+            color: #1a1a1a;
+            background: white;
+            cursor: pointer;
+        }
+        .logo
+        {
+            background: rgb(241, 241, 241);
+            float: left;
+            width: 120px;
+            margin-left: 0px;
+        }
+        .posts-feed:hover, .login:hover, .register:hover, .profile:hover
+        {
+            background: rgb(241, 241, 241);
+        }
+        .posts-feed:active, .login:active, .register:active, .profile:active
+        {
+            background: rgb(226, 226, 226);
+        }
+        #add-post
+        {
+            width: 450px;
+            height: 50px;
+            display: flex;
+            margin: auto;
+            align-items: center;
+            background-color: rgb(240, 240, 240);
+            border-radius: 15px;
+            z-index: 2;
+            position: relative;
+        }
+        #add
+        {
+            width: 70%;
+            padding: 20px;
+            height: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 15px;
+            outline: none;
+        }
+        .adds
+        {
+            width: 10%;
+            height: 54px;
+            border: none;
+        }
+        #att
+        {
+            background: url('../public/attach.svg');
+            background-repeat: no-repeat;
+            background-size: auto 40%;
+            background-position: center;
+        }
+        #snt
+        {
+            background: url('../public/send.png');
+            background-repeat: no-repeat;
+            background-size: auto 40%;
+            background-position: center;
+        }
+        #snt:disabled
+        {
+            background: url('../public/send_un.png');
+            background-repeat: no-repeat;
+            background-size: auto 40%;
+            background-position: center;
+        }
+        .comment-cont
+        {
+            margin-bottom: 20px;
+        }
+        #asd
+        {
+            position: relative;
+        }
+        #att::before {
+            content: 'Select some files';
+            color: rgb(240, 240, 240);
+        }
+        #selected
+        {
+            width: 350px;
+            padding-left: 25px;
+            padding-right: 25px;
+            height: 20px;;
+            margin: auto;
+            background-color: #e6e6e6;
+            color: #1a1a1a;
+            margin-bottom: 40px;
+            padding-bottom: 5px;
+            margin-top: -15px;
+            padding-top: 20px;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            display: none;
+            position: relative;
+            left: -70px;
+            z-index: 1;
+
+        }
+        #close
+        {
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            outline: none;
+            border: none;
+            background-color: white;
+            border-radius: 5px;
+            margin-left: 5px;
+        }
+        #close:hover
+        {
+            background-color: rgb(241, 241, 241);
+        }
+        #close:active
+        {
+            background-color: rgb(219, 219, 219);
+        }
+        a
+        {
+            text-decoration: none;
+            color: #1a1a1a;
+        }
+        .avatar-conte
+        {
+            width: 8%;
+        }
+        .avatar-conte img
+        {
+            width: 100%;
+            height: auto;
+            border-radius: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <a href="https://github.com/RedMaun">
+            <button class="logo">@RedMaun</button>
+        </a>
+
+        <a href="/api/user/exit">
+            <button class="profile">Выход</button>
+        </a>
+
+        <a href="/api/profile/{{ nick }}">
+            <button class="profile">{{ nick }}</button>
+        </a>
+
+        <a href="/api/posts">
+            <button class="posts-feed">Посты</button>
+        </a>
+    </div>
+    <div id="feed">
+        <div id="space"></div>
+        <div class="comment-cont">
+            <div class="cont">
+                <div class="title-row">
+                    <div class="avatar-cont">
+                        <img src={{ avatar }}>
+                    </div>
+                    <div class="data-cont">
+                        <a href="/api/profile/{{ name }}"class="nick">{{ name }}</a>
+                        <div class="date">{{ date }}</div>
+                    </div>
+                </div>
+                <div class="content">
+                    {{#if description}}
+                    <div class="desc">{{ description }}</div>
+                    {{/if}}
+                    {{#if attach}}
+                    <div class="attach">
+                        <img src={{ attach }}>
+                    </div>
+                    {{/if}}
+                </div>
+                <div class="bottom-row">
+                    {{#contains likesAmount @root.nick}}
+                        <button class="likes"name="like" onclick="like(this)" style="background: #ff5555" value={{_id}}{{@root.nick }}>
+                            <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path d="M16 4a5.95 5.95 0 00-3.89 1.7l-.12.11-.12-.11A5.96 5.96 0 007.73 4 5.73 5.73 0 002 9.72c0 3.08 1.13 4.55 6.18 8.54l2.69 2.1c.66.52 1.6.52 2.26 0l2.36-1.84.94-.74c4.53-3.64 5.57-5.1 5.57-8.06A5.73 5.73 0 0016.27 4zm.27 1.8a3.93 3.93 0 013.93 3.92v.3c-.08 2.15-1.07 3.33-5.51 6.84l-2.67 2.08a.04.04 0 01-.04 0L9.6 17.1l-.87-.7C4.6 13.1 3.8 11.98 3.8 9.73A3.93 3.93 0 017.73 5.8c1.34 0 2.51.62 3.57 1.92a.9.9 0 001.4-.01c1.04-1.3 2.2-1.91 3.57-1.91z" fill="currentColor" fill-rule="nonzero"></path></g></svg>
+                            <div>{{ length likesAmount }}</div>
+                        </button>
+                    {{else}}
+                        <button class="likes"  id={{_id}} name="like" onclick="like(this)"value={{_id}}{{@root.nick }}>
+                                <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path d="M16 4a5.95 5.95 0 00-3.89 1.7l-.12.11-.12-.11A5.96 5.96 0 007.73 4 5.73 5.73 0 002 9.72c0 3.08 1.13 4.55 6.18 8.54l2.69 2.1c.66.52 1.6.52 2.26 0l2.36-1.84.94-.74c4.53-3.64 5.57-5.1 5.57-8.06A5.73 5.73 0 0016.27 4zm.27 1.8a3.93 3.93 0 013.93 3.92v.3c-.08 2.15-1.07 3.33-5.51 6.84l-2.67 2.08a.04.04 0 01-.04 0L9.6 17.1l-.87-.7C4.6 13.1 3.8 11.98 3.8 9.73A3.93 3.93 0 017.73 5.8c1.34 0 2.51.62 3.57 1.92a.9.9 0 001.4-.01c1.04-1.3 2.2-1.91 3.57-1.91z" fill="currentColor" fill-rule="nonzero"></path></g></svg>
+                                <div>{{ length likesAmount }}</div>
+                        </button>
+                    {{/contains}}
+                    <button class="comments">
+                        <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path d="M16.9 4H7.1c-1.15 0-1.73.11-2.35.44-.56.3-1 .75-1.31 1.31C3.11 6.37 3 6.95 3 8.1v5.8c0 1.15.11 1.73.44 2.35.3.56.75 1 1.31 1.31l.15.07c.51.25 1.04.35 1.95.37h.25v2.21c0 .44.17.85.47 1.16l.12.1c.64.55 1.6.52 2.21-.08L13.37 18h3.53c1.15 0 1.73-.11 2.35-.44.56-.3 1-.75 1.31-1.31.33-.62.44-1.2.44-2.35V8.1c0-1.15-.11-1.73-.44-2.35a3.17 3.17 0 00-1.31-1.31A4.51 4.51 0 0016.9 4zM6.9 5.8h9.99c.88 0 1.18.06 1.5.23.25.13.44.32.57.57.17.32.23.62.23 1.5v6.16c-.02.61-.09.87-.23 1.14-.13.25-.32.44-.57.57-.32.17-.62.23-1.5.23h-4.02a.9.9 0 00-.51.26l-3.47 3.4V17.1c0-.5-.4-.9-.9-.9H6.74a2.3 2.3 0 01-1.14-.23 1.37 1.37 0 01-.57-.57c-.17-.32-.23-.62-.23-1.5V7.74c.02-.61.09-.87.23-1.14.13-.25.32-.44.57-.57.3-.16.58-.22 1.31-.23z" fill="currentColor" fill-rule="nonzero"></path></g></svg>
+                        {{ length comments }}
+                    </button>
+                </div>
+            </div>
+            <div class="comment-section">
+                <div class="comm">
+                    <div id="spacce"></div>
+                    {{#each comments}}
+                    <div class="comment">
+                        <div class="comment-title">
+                            <div class="avatar-conte">
+                                <img src="{{ avatar }}">
+                            </div>
+                            <div class="data-cont">
+                                <div class="nick">{{ name }}</div>
+                                <div class="date">{{ date }}</div>
+                            </div>
+                        </div>
+                        <div class="content-comment">
+                            <div class="desc-comment">{{ description }}</div>
+                            {{#if attach}}
+                            <div class="attach-comment">
+                                <img src="{{ attach }}">
+                            </div>
+                            {{/if}}
+                        </div>
+                    </div>
+                    {{/each}}
+                    <form class="add-cont" method="post" action="/api/add" enctype="multipart/form-data">
+                        <input type="text" name="post" class="add" placeholder="Напишите комментарий..."> 
+                        <input class="add-button" type="file" name="dd" id="attt"></input>
+                        <button class="sent-button" name="idd" value="{{_id}}" type="submit"></button>
+                    </form>
+                    <div id="selected">
+                        <button onclick="closes(this)" id="close">x</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        function like(event)
+        {
+            var color = event.style.background;
+            if (color == "rgb(255, 85, 85)")
+            {
+                event.style.background = 'rgb(212, 212, 212)'
+                event.childNodes[3].innerHTML = Number(event.childNodes[3].innerHTML) - 1
+            }
+            else
+            {
+                event.style.background = 'rgb(255, 85, 85)'
+                event.childNodes[3].innerHTML = Number(event.childNodes[3].innerHTML) + 1
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", '/api/like', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({
+                like: event.value
+            }));
+        }
+        $('#attt').change(function() {
+            var file = $('#attt')[0].files[0].name;
+            var a = document.getElementById('selected');
+            a.innerHTML = file + a.innerHTML;
+            a.style.display = 'block';
+        });
+        function closes(event)
+        {
+            var a = document.getElementById('attt');
+            a.value = '';
+            var sel = document.getElementById('selected');
+            sel.innerHTML = '<button onclick="closes(this)" id="close">x</button>'
+            sel.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
